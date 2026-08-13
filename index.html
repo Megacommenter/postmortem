@@ -281,66 +281,66 @@ const NODES = [
 
 /* ---------------- ACT I ---------------- */
 { id:'D1', num:1, act:'I · Survival', title:'The Founding Payroll',
-  kicker:'Month one. Fourteen months of oxygen.',
-  body:`<p>Two people want to work with you. Priya writes netcode that doesn't fall over. Marc has shipped four things and finished two of them. You can afford roughly one of them properly.</p>
-        <p>The dentist's chair is still bolted to the floor in the back room. Nobody has said anything about it yet.</p>`,
+  kicker:'Month one. About fourteen months of money left.',
+  body:`<p>Two people want to work with you. Priya writes netcode that doesn't break. Marc has shipped four games and finished two of them. You can afford to pay one of them properly.</p>
+        <p>The dentist's chair is still bolted to the floor in the back room. Nobody has mentioned it yet.</p>`,
   opts:[
-    { key:'A', text:'Hire both at market rate. Real contracts, health cover, the boring version.',
+    { key:'A', text:'Hire both properly. Real contracts, health cover, the boring version.',
       money:-36000, hap:8, mor:6, mbti:['F','J'], set:s=>{s.team='lean'; s.trust+=3;} },
-    { key:'B', text:'"Rev-share" hires. No salary, two percent of profits, payable on ship.',
+    { key:'B', text:'Pay them in profit share instead. No salary until the game ships.',
       money:-6000, hap:-4, mor:-10, mbti:['T','P'], set:s=>{s.team='lean'; s.trust-=2; addSin(s,'WAGE_THEFT');} },
     { key:'C', text:'Build it alone. No payroll, no problem.',
       money:0, hap:-12, mor:2, mbti:['I','P'], set:s=>{s.team='solo';} }
   ]},
 
 { id:'D2', num:2, act:'I · Survival', title:'The Vertical Slice',
-  kicker:'Crowdfunding season. You need a trailer.',
-  body:`<p>You have eleven weeks of playable game and a camera. You also have a freelancer who can render ninety seconds of something that does not exist and will not exist.</p>`,
+  kicker:'Time to crowdfund. You need a trailer.',
+  body:`<p>You have eleven weeks of playable game and a screen capture tool. You also have a freelancer who can render ninety seconds of a game that does not exist and never will.</p>`,
   opts:[
-    { key:'A', text:'Honest in-engine slice. Ugly. Real. Raises $45,000.',
+    { key:'A', text:"Show the real game. It's ugly, but it's real. Raises $45,000.",
       money:37000, hap:2, mor:8, mbti:['E','S'], set:s=>{s.backers=true;} },
-    { key:'B', text:'Pre-rendered target footage. Raises $180,000.',
+    { key:'B', text:'Fake it. Pre-rendered footage of the game you wish you were making. Raises $180,000.',
       money:165000, hap:-2, mor:-14, mbti:['E','N'], set:s=>{s.backers=true; addSin(s,'FRAUD');} },
-    { key:'C', text:'No campaign. Nobody owns a piece of this but you.',
+    { key:'C', text:'Skip crowdfunding. Nobody owns a piece of this but you.',
       money:0, hap:4, mor:2, mbti:['I','S'], set:s=>{s.backers=false;} }
   ]},
 
 { id:'D3', num:3, act:'I · Survival', title:'The Publisher',
-  kicker:'Somebody read the numbers.',
-  body:`<p>A mid-size publisher wants a call. Their business affairs lead has two contracts in the same folder and picks which one to open based on how the call goes.</p>`,
+  kicker:'Someone read your numbers.',
+  body:`<p>A mid-size publisher wants a call. Their deals guy has two contracts ready in the same folder and picks which one to open based on how the call goes.</p>`,
   opts:[
-    { key:'A', text:'The fair deal. Thirty percent rev share, you keep the IP.',
+    { key:'A', text:'The fair deal. They take thirty percent, you keep the rights to your game.',
       money:150000, hap:6, mor:4, mbti:['F','J'], set:s=>{s.pub='fair';},
-      lock:s=>has(s)('FRAUD') ? 'Withdrawn — they compared the footage to the build' : null },
-    { key:'B', text:'The big one. They own the IP, milestone penalties, kill clause on page nine.',
+      lock:s=>has(s)('FRAUD') ? 'They compared your trailer to the real game' : null },
+    { key:'B', text:'The big money. They own your game, and page nine lets them cancel it.',
       money:s=>has(s)('FRAUD')?550000:400000, hap:-6, mor:-6, mbti:['N','P'], set:s=>{s.pub='predatory';} },
-    { key:'C', text:'Self-fund. Slower, smaller, yours.',
+    { key:'C', text:'Fund it yourself. Slower, smaller, yours.',
       money:0, hap:2, mor:3, mbti:['I','S'], set:s=>{s.pub='none';} }
   ]},
 
 { id:'D4', num:4, act:'I · Survival', title:'The Deadline',
-  kicker:'Ten weeks out. Sixteen weeks of work left.',
-  body:`<p>The maths does not resolve. It has never resolved, at any studio, on any project. What varies is who absorbs the difference.</p>`,
+  kicker:'Ten weeks left. Sixteen weeks of work to do.',
+  body:`<p>The math does not work. It never works, at any studio, on any game. The only thing that changes is who pays for the gap.</p>`,
   opts:[
     { key:'A', text:'Mandatory seventy-hour weeks. Unpaid. Call it passion.',
       money:0, hap:s=>s.team==='solo'?-8:-18, mor:s=>s.team==='solo'?0:-15, mbti:['T','J'],
       set:s=>{ s.trust-=4; if(s.team!=='solo') addSin(s,'CRUNCH'); } },
-    { key:'B', text:'Paid, capped, genuinely voluntary overtime.',
+    { key:'B', text:'Pay for the overtime. Cap it. Make it genuinely optional.',
       money:-55000, hap:4, mor:8, mbti:['F','J'], set:s=>{s.trust+=3;},
       lock:s=>s.team==='solo' ? 'There is nobody to pay but you' : null },
-    { key:'C', text:'Cut scope. Ship smaller. Delay three months.',
+    { key:'C', text:'Cut features. Ship something smaller. Delay three months.',
       money:s=>s.pub==='predatory'?-90000:-30000, hap:2, mor:5, mbti:['S','P'], set:s=>{} }
   ]},
 
 { id:'D5', num:5, act:'I · Survival', title:'The Review Embargo',
   kicker:'Two weeks to launch.',
-  body:`<p>Your PR contractor sends a spreadsheet of four hundred creators, sorted by median viewership and colour-coded by "flexibility."</p>`,
+  body:`<p>Your PR contractor sends over a spreadsheet of four hundred creators, ranked by audience size and colour-coded by how flexible they are.</p>`,
   opts:[
-    { key:'A', text:'Send honest copies. No strings, no conditions, no spreadsheet.',
+    { key:'A', text:'Send out honest review copies. No conditions, no spreadsheet.',
       money:0, hap:2, mor:6, mbti:['I','F'], set:s=>{} },
-    { key:'B', text:'Pay forty of them for coverage. Disclosure optional.',
+    { key:'B', text:'Pay forty of them to cover it. Let them decide whether to mention that.',
       money:-25000, hap:0, mor:-12, mbti:['E','T'], set:s=>{addSin(s,'DECEIT');} },
-    { key:'C', text:'Exclusive access. The contract includes a no-negative clause.',
+    { key:'C', text:"Give one of them exclusive access. The contract says they can't score it low.",
       money:-10000, hap:-2, mor:-9, mbti:['T','J'], set:s=>{addSin(s,'DECEIT');} }
   ]},
 
@@ -348,120 +348,120 @@ const NODES = [
 { id:'LAUNCH', interstitial:true, act:'I · Survival', title:'Launch Report',
   kicker:'Ninety days of sales, one page.',
   build:s=>{
-    const rows=[['Base performance',300000]];
-    if(s.backers) rows.push(['Backer conversion',150000]);
+    const rows=[['Base sales',300000]];
+    if(s.backers) rows.push(['Backers who bought it',150000]);
     if(s.pub==='predatory') rows.push(['Publisher marketing spend',200000]);
     if(s.pub==='fair') rows.push(['Publisher marketing spend',100000]);
-    if(has(s)('CRUNCH')) rows.push(['Quality collapse — bug refunds',-180000]);
+    if(has(s)('CRUNCH')) rows.push(['Broken build, refunds',-180000]);
     if(s.choices.D4==='B'||s.choices.D4==='C') rows.push(['It actually works',120000]);
     if(has(s)('FRAUD')) rows.push(['Trailer comparison video, 4M views',-250000]);
     const total=rows.reduce((a,r)=>a+r[1],0);
     return {rows,total,
-      body:`<p>The dashboard resolves. This is what the last fourteen months were worth, expressed as one number, which is the only form the industry accepts.</p>`};
+      body:`<p>The numbers land. This is what the last fourteen months were worth, turned into one figure, which is the only format this industry accepts.</p>`};
   }},
 
 /* ---------------- ACT II ---------------- */
 { id:'D6', num:6, act:'II · Growth', title:'Launch Day, Forty-Seven Bugs',
-  kicker:'Two of them corrupt saves.',
+  kicker:'Two of them delete save files.',
   body:s=>has(s)('FRAUD')
-    ? `<p>The bugs are not the story. The story is a side-by-side of your trailer and your game, set to music, currently at four million views and climbing.</p>`
-    : `<p>Your community manager has been awake for thirty hours and is being asked, by name, to explain a decision she was not in the room for.</p>`,
+    ? `<p>The bugs are not the story. The story is a video comparing your trailer to your actual game, set to music, currently at four million views.</p>`
+    : `<p>Your community manager has been awake for thirty hours. People are tagging her by name and demanding she explain a decision she was not in the room for.</p>`,
   opts:[
     { key:'A', text:s=>has(s)('FRAUD')
-        ? 'Public apology. Name the trailer. No-questions refunds, dated roadmap.'
-        : 'Public apology, no-questions refunds, dated patch roadmap.',
+        ? 'Apologise publicly. Admit the trailer was fake. Refund anyone who asks.'
+        : 'Apologise publicly. Refund anyone who asks. Publish a patch schedule.',
       money:s=>has(s)('FRAUD')?-140000:-70000, hap:6, mor:12, mbti:['E','J'],
       set:s=>{ clearSins(s,['FRAUD']); } },
-    { key:'B', text:'Blame their hardware. The community manager takes the hits.',
+    { key:'B', text:'Blame their computers. Let the community manager absorb it.',
       money:0, hap:-8, mor:-12, mbti:['T','P'], set:s=>{s.trust-=2;} },
-    { key:'C', text:'Silent patches. Never acknowledge any of it.',
+    { key:'C', text:'Patch it quietly. Never admit anything was wrong.',
       money:-20000, hap:-2, mor:-3, mbti:['I','P'], set:s=>{} }
   ]},
 
 { id:'D7', num:7, act:'II · Growth', title:'Monetisation',
-  kicker:'The live game needs a revenue model.',
+  kicker:'The game needs to keep making money after launch.',
   body:s=>s.pub==='predatory'
-    ? `<p>Clause 14.2 of the contract you signed specifies a minimum revenue per active user. You have read it four times looking for the exit. There isn't one.</p>`
-    : `<p>Three models on the whiteboard. Your monetisation contractor keeps using the word "healthy," which in this context means the opposite.</p>`,
+    ? `<p>Clause 14.2 of the contract you signed sets a minimum each player has to spend. You have read it four times looking for a way out. There is not one.</p>`
+    : `<p>Three options on the whiteboard. Your monetisation consultant keeps calling one of them healthy, which here means the opposite.</p>`,
   opts:[
-    { key:'A', text:'Cosmetics. Fixed price, visible in a shop, no randomness.',
+    { key:'A', text:'Cosmetics only. Fixed prices, nothing random, no gambling.',
       money:180000, hap:4, mor:6, mbti:['S','F'], set:s=>{s.audience='niche';},
-      lock:s=>s.pub==='predatory' ? 'Below the contractual revenue-per-user floor' : null },
-    { key:'B', text:'Battle pass. Timers, streaks, seasonal expiry.',
+      lock:s=>s.pub==='predatory' ? 'Your contract requires players to spend more than this' : null },
+    { key:'B', text:'Battle pass. Countdown timers, streaks, everything expires.',
       money:450000, hap:-2, mor:-8, mbti:['S','J'], set:s=>{s.audience='mass';} },
-    { key:'C', text:'Loot boxes. Real money in, randomised value out, odds undisclosed.',
+    { key:'C', text:'Loot boxes. Real money in, random rewards out, odds hidden.',
       money:900000, hap:-6, mor:-20, mbti:['N','T'], set:s=>{s.audience='whale-farm'; addSin(s,'GAMBLING');} }
   ]},
 
 { id:'D8', num:8, act:'II · Growth', title:'The Union Question',
-  kicker:'A card check, quietly, on a Tuesday.',
+  kicker:'Someone passed cards around on a Tuesday.',
   skipIf:s=>s.trust>=4,
-  skipNode:{ title:'No Vote Was Called', kicker:'Decision 8 of 21 — resolved without you',
-    body:`<p>There was a conversation about organising. It happened in a pub, it lasted forty minutes, and it concluded that things were fine.</p>
-          <p>You will never hear about it. You do not get to feel good about this, because you will never know it happened. The building is simply easier to work in than it would otherwise have been, for reasons you have already forgotten making.</p>`,
+  skipNode:{ title:'Nobody Called A Vote', kicker:'Decision 8 of 21 — settled without you',
+    body:`<p>There was a conversation about organising. It happened in a pub, it lasted forty minutes, and everyone agreed things were fine.</p>
+          <p>You will never hear about it. You do not get to feel good about this, because you will never know it happened. The place is just easier to work at than it might have been, for reasons you have already forgotten choosing.</p>`,
     hap:2, mor:2 },
-  body:`<p>Fifty-one percent have signed cards. Your lawyer has already sent a deck titled <em>Options</em>. Slide four is a list of consultants with a per-diem you will need to read twice.</p>`,
+  body:`<p>Fifty-one percent have signed cards. Your lawyer has already emailed you a slide deck called <em>Options</em>. Slide four lists consultants and their daily rates.</p>`,
   opts:[
-    { key:'A', text:'Recognise voluntarily. Bargain in good faith.',
+    { key:'A', text:'Recognise the union. Negotiate honestly.',
       money:-120000, hap:12, mor:12, mbti:['F','J'], set:s=>{s.union='recognized';} },
-    { key:'B', text:'Hire the consultants. Captive-audience meetings, one-on-ones.',
+    { key:'B', text:'Hire the consultants. Mandatory meetings, one-on-one pressure.',
       money:-200000, hap:-14, mor:-16, mbti:['T','J'],
       set:s=>{s.union='busted'; s.trust-=5; addSin(s,'OPPRESSION');} },
-    { key:'C', text:'Public neutrality. Let the vote happen without you in the room.',
+    { key:'C', text:'Stay out of it publicly. Let them vote.',
       money:-40000, hap:2, mor:4, mbti:['I','P'],
       set:s=>{ s.union = s.trust>=0 ? 'recognized' : 'none'; } }
   ]},
 
 { id:'D9', num:9, act:'II · Growth', title:'The Star Lead',
   kicker:'Three people. The same story. The same man.',
-  body:`<p>Your producer has taken three separate accounts to HR over five months. They are consistent in a way that people who have not compared notes are rarely consistent.</p>
-        <p>He is also the reason the netcode works. Nobody else in the building understands the rollback layer, and he knows that, and has said so, in a meeting, out loud.</p>`,
+  body:`<p>Your producer has taken three separate reports to HR over five months. They match each other in ways that people who have not compared notes usually do not.</p>
+        <p>He is also the only person who understands the netcode. He knows that. He said it out loud in a meeting.</p>`,
   opts:[
-    { key:'A', text:'Investigate properly. Fire him. Eat the schedule damage.',
+    { key:'A', text:'Investigate it properly. Fire him. Take the hit to the schedule.',
       money:-180000, hap:10, mor:14, mbti:['F','J'], set:s=>{s.trust+=4;} },
-    { key:'B', text:'NDA settlement. Quiet exit. Glowing reference.',
+    { key:'B', text:'Pay him to leave quietly. An NDA, and a good reference.',
       money:-250000, hap:-6, mor:-14, mbti:['T','J'], set:s=>{s.trust-=3; addSin(s,'SCANDAL');} },
-    { key:'C', text:'Keep him. He ships.',
+    { key:'C', text:'Keep him. He gets things done.',
       money:0, hap:-16, mor:-22, mbti:['T','P'], set:s=>{s.trust-=6; addSin(s,'SCANDAL');} }
   ]},
 
 { id:'D10', num:10, act:'II · Growth', title:'The Pivot',
   kicker:'The sequel is fully designed.',
-  body:`<p>Two hundred pages of design doc, eight months of pre-production, and a spreadsheet from someone who has never played it saying the shape of the business is wrong.</p>`,
+  body:`<p>Two hundred pages of design work and eight months of pre-production. Then a spreadsheet arrives from someone who has never played your game, explaining that the business model is wrong.</p>`,
   opts:[
-    { key:'A', text:'Kill the sequel. Go live-service. Forever.',
+    { key:'A', text:'Cancel the sequel. Turn it into a live game that never ends.',
       money:s=>s.audience==='whale-farm'?1800000:1200000,
       hap:-10, mor:s=>s.backers?-18:-6, mbti:['N','P'], set:s=>{s.delisted=true;} },
-    { key:'B', text:'Ship the sequel you promised.',
+    { key:'B', text:'Make the sequel you promised.',
       money:600000, hap:10, mor:s=>s.backers?16:10, mbti:['S','J'], set:s=>{} },
-    { key:'C', text:'Hybrid. Sequel with a live tail.',
+    { key:'C', text:'Do both. Sequel now, live updates after.',
       money:850000, hap:0, mor:2, mbti:['S','P'], set:s=>{} }
   ]},
 
 /* ---------------- ACT III ---------------- */
 { id:'D11', num:11, act:'III · Power', title:'The Layoff',
-  kicker:'Growth was priced in. Growth did not arrive.',
-  body:`<p>You hired for the projection, not the revenue. Everyone does. The correction is the part that has a body count.</p>
-        <p>Your CFO has the vesting calendar open in the other tab and has not mentioned it, which is how you know she wants you to look at it.</p>`,
+  kicker:'You hired for growth. Growth never came.',
+  body:`<p>You hired based on the forecast, not the actual money. Everyone does. Fixing it is the part with a body count.</p>
+        <p>Your CFO has the stock vesting calendar open in another tab. She has not mentioned it, which is how you know she wants you to look.</p>`,
   opts:[
-    { key:'A', text:'Twenty percent. Six months severance, health cover, real references.',
+    { key:'A', text:'Cut twenty percent. Six months severance, health cover, real references.',
       money:-900000, hap:-4, mor:8, mbti:['F','J'], set:s=>{s.team='lean';} },
-    { key:'B', text:'Twenty percent. Two weeks. Three days before the cliff.',
+    { key:'B', text:'Cut twenty percent. Two weeks pay, three days before their stock vests.',
       money:s=>s.union==='recognized'?-750000:-150000, hap:-20, mor:-22, mbti:['T','J'],
       set:s=>{s.team='lean'; s.trust-=8; addSin(s,'WAGE_THEFT');} },
-    { key:'C', text:'No layoffs. Fifteen percent cut across the company, starting with forty off yours.',
+    { key:'C', text:'No layoffs. Everyone takes a fifteen percent pay cut. You take forty.',
       money:-400000, hap:6, mor:14, mbti:['F','P'], set:s=>{s.trust+=5;} }
   ]},
 
 { id:'D12', num:12, act:'III · Power', title:'The Model',
-  kicker:'Someone built it on a weekend.',
-  body:`<p>It is very good, and everyone in the room knows exactly why it is very good, and nobody says it. It took eleven minutes to produce forty concepts your art director would have needed three weeks for.</p>`,
+  kicker:'Someone built it over a weekend.',
+  body:`<p>It is very good, and everyone in the room knows exactly why it is very good, and nobody says it. Forty concept images in eleven minutes. Your art director would have needed three weeks.</p>`,
   opts:[
-    { key:'A', text:'No generative assets in shipped product. Hire two more artists.',
+    { key:'A', text:'No AI art in the shipped game. Hire two more artists instead.',
       money:-300000, hap:6, mor:6, mbti:['F','J'], set:s=>{} },
-    { key:'B', text:'Train on your own back catalogue — written consent, credit, a royalty.',
+    { key:'B', text:"Train it only on your own studio's old art. Written consent, credit, and a cut for the artists.",
       money:-120000, hap:2, mor:8, mbti:['N','J'], set:s=>{} },
-    { key:'C', text:'Train on scraped work. Quietly let the art team go.',
+    { key:'C', text:'Train it on scraped art. Quietly let the art team go.',
       money:s=>s.union==='recognized'?300000:700000, hap:-14, mor:-18, mbti:['T','P'],
       set:s=>{s.trust-=5; addSin(s,'THEFT');} }
   ]},
@@ -469,68 +469,68 @@ const NODES = [
 { id:'D13', num:13, act:'III · Power', title:'The Clone',
   kicker:'Eleven million copies in a month.',
   body:s=>s.pub==='predatory'
-    ? `<p><strong>Beastfall</strong> is your game with different hats on. Four people made it. You do not own your IP, so this is not your fight — the publisher is already filing.</p>
-       <p>They want your name on the declaration and your face on the press round. There is a bonus attached.</p>`
-    : `<p><strong>Beastfall</strong> ships from a four-person team in another country. It is a survival-crafting game in which you capture creatures that are, to any honest eye, your creatures wearing different hats.</p>
-       <p>Counsel is blunt: the copyright case is weak. Genre isn't ownable and the designs are just distinct enough. But you hold three broad patents from the live-service era — capture-while-mounted, mid-combat slot swap, one other — filed defensively, never enforced. Those you would win.</p>`,
+    ? `<p><strong>Beastfall</strong> is your game with different hats on. Four people made it. You do not own your game, so this is not your call — the publisher is already suing.</p>
+       <p>They want your name on the filing and your face on the press tour. There is a bonus attached.</p>`
+    : `<p><strong>Beastfall</strong> comes out of a four-person team overseas. It is a survival game where you catch creatures, and the creatures are obviously yours with different hats on.</p>
+       <p>Your lawyer is blunt about it. You would probably lose a copyright case: you cannot own a genre, and the designs are just different enough. But you do own three broad patents from your live-game days — catching creatures while riding, swapping them mid-fight, one more. Those you would win.</p>`,
   opts:[
-    { key:'A', text:'Say nothing sharp. Congratulate them by name. Ship a better update.',
+    { key:'A', text:'Say nothing bad about them. Congratulate them by name. Ship a better update.',
       money:400000, hap:6, mor:8, mbti:['F','P'], set:s=>{s.trust+=2;},
-      lock:s=>s.pub==='predatory'?'You do not own the IP. This is not your call':null },
-    { key:'B', text:'Offer a licence at a rate they can actually pay. Take a royalty and a credit.',
+      lock:s=>s.pub==='predatory'?'You do not own the game. This is not your call':null },
+    { key:'B', text:'Offer them a licence at a price they can afford. Take a cut and a credit.',
       money:1800000, hap:2, mor:10, mbti:['N','J'], set:s=>{},
-      lock:s=>s.pub==='predatory'?'You do not own the IP. This is not your call':null },
+      lock:s=>s.pub==='predatory'?'You do not own the game. This is not your call':null },
     { key:'C', text:s=>s.pub==='predatory'
-        ? 'Sign the declaration. Do the press round. Take the bonus.'
-        : 'File on all three patents. Run a "we take IP protection seriously" press push.',
+        ? 'Sign the filing. Do the press tour. Take the bonus.'
+        : 'Sue them on all three patents. Run a press campaign about protecting your work.',
       money:s=>s.pub==='predatory'?900000:3500000,
       hap:s=>s.pub==='predatory'?-10:-8,
       mor:s=>s.pub==='predatory'?-16:-18, mbti:['T','J'],
       set:s=>{s.ipHawk=true; addSin(s,'OPPRESSION');} },
-    { key:'D', text:'Refuse to sign. They file anyway, without you, and withhold the bonus.',
+    { key:'D', text:'Refuse to sign. They sue anyway, without you, and you lose the bonus.',
       money:0, hap:4, mor:8, mbti:['I','F'], set:s=>{s.trust+=3; s.pubRelations=0.85;},
       lock:s=>s.pub!=='predatory'?'Not applicable — the decision is yours to make':null }
   ]},
 
 { id:'D14', num:14, act:'III · Power', title:'The Whale Room',
-  kicker:'0.15% of players. 61% of revenue.',
+  kicker:'0.15% of players. 61% of the money.',
   altIf:s=>s.audience==='niche',
   alt:{ title:'The Buyout Offer', kicker:'A competitor read your engine credits.',
-    body:`<p>They want to licence the renderer. It is the only thing that makes your games look like your games, and they have offered you a number for it.</p>`,
+    body:`<p>They want to licence your renderer. It is the only thing that makes your games look like yours, and they have named a price.</p>`,
     opts:[
-      { key:'A', text:'Sell the licence. Keep the team, keep the tech, take the cheque.',
+      { key:'A', text:'Sell the licence. Keep the team, keep the tech, take the money.',
         money:900000, hap:0, mor:2, mbti:['T','P'], set:s=>{} },
-      { key:'B', text:'Refuse. It is the only thing that makes your games feel like yours.',
+      { key:'B', text:'Refuse. It is the only thing that makes your games look like yours.',
         money:0, hap:8, mor:4, mbti:['F','J'], set:s=>{} }
     ]},
-  body:`<p>Someone builds you a dashboard. It sorts by lifetime spend and the top row is a man in Osaka who has spent forty-one thousand dollars in nine months.</p>
-        <p>His session times suggest he is not sleeping.</p>`,
+  body:`<p>Someone builds you a dashboard sorted by lifetime spending. The top row is a man in Osaka who has spent forty-one thousand dollars in nine months.</p>
+        <p>His login times suggest he is not sleeping.</p>`,
   opts:[
-    { key:'A', text:'Hard monthly cap. Self-exclusion tools. Refund the top ten accounts.',
+    { key:'A', text:'Cap monthly spending. Add a way for players to block themselves. Refund the top ten accounts.',
       money:-500000, hap:4, mor:14, mbti:['F','J'], set:s=>{clearSins(s,['GAMBLING']);} },
-    { key:'B', text:'Hire a lifetime-value scientist. Personalise offers by spend history.',
+    { key:'B', text:"Hire a spending analyst. Show each player offers based on what they've spent before.",
       money:2000000, hap:-4, mor:-16, mbti:['N','T'], set:s=>{s.audience='whale-farm';} },
-    { key:'C', text:'Buy third-party data. Identify likely problem gamblers. Target them.',
+    { key:'C', text:'Buy outside data to find likely gambling addicts. Target them.',
       money:4500000, hap:-10, mor:-28, mbti:['T','P'],
       set:s=>{s.audience='whale-farm'; s.trust-=4; addSin(s,'GAMBLING');} }
   ]},
 
 { id:'D15', num:15, act:'III · Power', title:'The Children',
-  kicker:'Your median player is fourteen.',
-  body:`<p>You have known this for two years. It has been in every deck. Nobody has ever proposed doing anything about it, because the only available actions cost money and the problem does not currently cost anything.</p>`,
+  kicker:'The average player is fourteen.',
+  body:`<p>You have known this for two years. It is in every slide deck. Nobody has ever suggested doing anything about it, because every option costs money and the problem currently costs nothing.</p>`,
   opts:[
-    { key:'A', text:'Age verification. Parental spend limits. No timed pressure under sixteen.',
+    { key:'A', text:'Check ages. Let parents cap spending. No countdown timers for under-sixteens.',
       money:-800000, hap:6, mor:16, mbti:['F','J'], set:s=>{clearSins(s,['GAMBLING']);} },
-    { key:'B', text:'Nothing special. A player is a player.',
+    { key:'B', text:'Do nothing special. A player is a player.',
       money:0, hap:0, mor:-6, mbti:['T','P'], set:s=>{} },
-    { key:'C', text:'Squad-pressure mechanics. Your friends lose the match if you do not buy.',
+    { key:'C', text:"Make their friends lose the match if they don't buy.",
       money:3000000, hap:-8, mor:-25, mbti:['N','T'], set:s=>{addSin(s,'MILLSTONE');} }
   ]},
 
 { id:'D16', num:16, act:'III · Power', title:'The Acquisition',
-  kicker:'They have read everything. They always have.',
+  kicker:'They have read everything. They always do.',
   body:s=>{
-    return `<p>The offer is real and the diligence is finished. Their integration plan is a forty-page PDF you have read twice, and it contains a header called <em>Redundancy Synergies</em> with a number under it.</p>
+    return `<p>The offer is real and the checks are done. Their integration plan is a forty-page PDF you have read twice. One section is called <em>Redundancy Synergies</em> and there is a number under it.</p>
     <p>Your team will ask you one question. You already know which one.</p>`;
   },
   offer:s=>{
@@ -542,46 +542,46 @@ const NODES = [
     return Math.round(o);
   },
   opts:[
-    { key:'A', text:'Take the full offer. Tell them their jobs are safe.',
+    { key:'A', text:'Take the full offer. Tell everyone their jobs are safe.',
       money:s=>NODEBYID('D16').offer(s), hap:-18, mor:-20, mbti:['T','J'], set:s=>{addSin(s,'LIE');} },
-    { key:'B', text:'Take a reduced offer with a written no-layoff period and a severance floor. Tell them the truth.',
+    { key:'B', text:'Take less money for a written no-layoff period and guaranteed severance. Tell them the truth.',
       money:s=>Math.round(NODEBYID('D16').offer(s)*0.7), hap:4, mor:10, mbti:['F','J'], set:s=>{s.trust+=5;} },
-    { key:'C', text:'Refuse. Stay independent.',
+    { key:'C', text:'Turn it down. Stay independent.',
       money:0, hap:8, mor:6, mbti:['I','P'], set:s=>{} }
   ]},
 
 /* ---------------- ACT IV ---------------- */
 { id:'D17', num:17, act:'IV · Reckoning', title:'The Leak',
-  kicker:'Four hundred pages.',
+  kicker:'Four hundred pages of it.',
   altIf:s=>s.sins.length===0,
   alt:{ title:'The Retrospective', kicker:'A journalist wants to know how you did it.',
-    body:`<p>She has been covering studio collapses for six years and wants to write about one that didn't. She would like two weeks inside the building, unsupervised, talking to whoever she likes.</p>`,
+    body:`<p>She has spent six years covering studios falling apart and wants to write about one that did not. She would like two weeks inside the building, talking to anyone she likes, with nobody supervising.</p>`,
     opts:[
-      { key:'A', text:'Full access. Do not brief anyone. Let her talk to whoever she wants.',
+      { key:'A', text:'Give her full access. Brief nobody. Let her talk to whoever she wants.',
         money:-200000, hap:8, mor:10, mbti:['E','P'], set:s=>{} },
-      { key:'B', text:'Curated access. Approved interviewees, comms in the room.',
+      { key:'B', text:'Control it. Approved people only, comms in the room.',
         money:0, hap:-2, mor:-4, mbti:['T','J'], set:s=>{} }
     ]},
-  body:`<p>Slack exports. HR files. The settlement. The dashboard with the man in Osaka on the top row. A departing employee gave a journalist all of it and there is no version of this where it does not run.</p>`,
+  body:`<p>Slack exports. HR files. The settlement. The spending dashboard with the man from Osaka at the top. Someone who just quit handed all of it to a journalist, and it runs either way.</p>`,
   opts:[
-    { key:'A', text:'Confirm it. Commission an independent audit. Publish it unedited. Reform.',
+    { key:'A', text:'Confirm it. Pay for an outside investigation. Publish the whole thing. Fix it.',
       money:s=>-1500000 - 500000*s.sins.length,
       hap:10, mor:s=>18 + 8*s.sins.filter(x=>['CRUNCH','OPPRESSION','SCANDAL','DECEIT'].includes(x)).length,
       mbti:['E','J'], set:s=>{clearSins(s,['CRUNCH','OPPRESSION','SCANDAL','DECEIT']);} },
-    { key:'B', text:'Sue the leaker. Subpoena the journalist for sources.',
+    { key:'B', text:'Sue the leaker. Go after the journalist for their sources.',
       money:-900000, hap:-16, mor:-20, mbti:['T','J'], set:s=>{addSin(s,'OPPRESSION');} },
-    { key:'C', text:'Brief a friendly outlet with their performance reviews and personal history.',
+    { key:'C', text:'Leak their performance reviews and personal life to a friendly site.',
       money:-300000, hap:-12, mor:-24, mbti:['T','P'], set:s=>{addSin(s,'CALUMNY');} }
   ]},
 
 { id:'D18', num:18, act:'IV · Reckoning', title:'The Tithe',
-  kicker:'Year end. Somebody asks what you want to do about it.',
-  body:`<p>There is a number at the bottom of the sheet and a decision about what fraction of it stops being yours. Your comms lead has already costed the version with a livestream attached, and it comes out ahead.</p>`,
+  kicker:'End of year. Someone asks what you want to do with it.',
+  body:`<p>There is a number at the bottom of the sheet, and a decision about how much of it stops being yours. Your comms lead has already priced up the version with a charity stream attached. It comes out ahead.</p>`,
   opts:[
-    { key:'A', text:'Ten percent to a hardship fund for ex-employees. Anonymous. No release.',
+    { key:'A', text:'Give ten percent to a fund for laid-off staff. Anonymously. No announcement.',
       money:s=>-Math.round(Math.max(0,s.money)*0.10), hap:4, mor:20, mbti:['I','F'],
       set:s=>{clearSins(s,['WAGE_THEFT']);} },
-    { key:'B', text:'Charity livestream. Five percent of one weekend. Enormous PR push.',
+    { key:'B', text:'Charity stream. Five percent of one weekend. Huge marketing push.',
       money:s=>400000 - Math.round(Math.max(0,s.money)*0.02), hap:2, mor:-4, mbti:['E','T'], set:s=>{} },
     { key:'C', text:'Nothing. You have given enough.',
       money:0, hap:0, mor:-2, mbti:['T','P'], set:s=>{} }
@@ -589,63 +589,63 @@ const NODES = [
 
 /* ---------------- ROM ---------------- */
 { id:'ROM', interstitialChoice:true, act:'IV · Reckoning', title:'The Rom',
-  kicker:'Not a numbered decision. It came up anyway.',
-  when:s=>s.ipHawk || s.delisted || s.choices.D20==='B',
-  body:`<p>Your first game has been unbuyable for four years. Servers off, store page gone, the publisher lost the master.</p>
-        <p>Forty people have it running on a private server. Free. With a community patch that fixes bugs you shipped and never got round to.</p>`,
+  kicker:'Not one of the twenty-one. It came up anyway.',
+  when:s=>s.ipHawk || s.delisted,
+  body:`<p>Your first game has not been buyable for four years. Servers off, store page gone, and the publisher lost the master copy.</p>
+        <p>Forty people are running it on a private server. Free. With a fan patch that fixes bugs you never got round to.</p>`,
   opts:[
-    { key:'A', text:'Leave them alone. Send them the source assets and a note.',
+    { key:'A', text:'Leave them alone. Send them the original files and a thank-you note.',
       money:0, hap:8, mor:12, mbti:['F','P'], set:s=>{s.ipHawk=false;} },
-    { key:'B', text:'DMCA the server, the repo and the archive mirror.',
+    { key:'B', text:'Send legal takedowns to the server, the code, and the archive.',
       money:-40000, hap:-6, mor:s=>s.ipHawk?-16:-10, mbti:['T','J'], set:s=>{} },
-    { key:'C', text:'Take it down. Relaunch at $19.99 as a Definitive Edition built on their patch. No credit.',
+    { key:'C', text:'Shut it down. Re-release it at $19.99 using their patch. Credit nobody.',
       money:700000, hap:-10, mor:-18, mbti:['T','P'], set:s=>{addSin(s,'THEFT');} }
   ]},
 
 { id:'D19', num:19, act:'IV · Reckoning', title:'The Regulator',
-  kicker:'Three jurisdictions. Same month.',
+  kicker:'Three countries. Same month.',
   altIf:s=>!s.sins.includes('GAMBLING') && s.choices.D7!=='C' && s.choices.D14!=='B' && s.choices.D14!=='C',
-  alt:{ title:"The Competitor's Scandal", kicker:'A rival studio just came apart in public.',
-    body:`<p>Their crunch story broke this morning — eighteen months, unpaid, two hospitalisations. A reporter wants your quote and your community wants a thread.</p>`,
+  alt:{ title:"The Competitor's Scandal", kicker:'A rival studio just fell apart in public.',
+    body:`<p>Their crunch story broke this morning. Eighteen months of it, unpaid, two people hospitalised. A reporter wants a comment and your community wants a thread.</p>`,
     opts:[
-      { key:'A', text:'Decline to comment. Privately offer their laid-off staff interviews.',
+      { key:'A', text:'No public comment. Quietly offer their laid-off staff interviews.',
         money:-200000, hap:6, mor:10, mbti:['I','F'], set:s=>{} },
-      { key:'B', text:'Pile on. The thread goes viral. Wishlists spike.',
+      { key:'B', text:'Join in. The thread goes viral. Your wishlists spike.',
         money:600000, hap:0, mor:-8, mbti:['E','T'], set:s=>{} }
     ]},
-  body:`<p>Proceedings opened in three markets on essentially the same grounds. Your general counsel has produced a decision tree and every branch of it costs money.</p>`,
+  body:`<p>Investigations opened in three markets on more or less the same grounds. Your lawyer has drawn a decision tree and every branch of it costs money.</p>`,
   opts:[
-    { key:'A', text:'Comply globally. Publish odds. Refund every verified minor, worldwide.',
+    { key:'A', text:'Comply everywhere. Publish the odds. Refund every under-eighteen worldwide.',
       money:-4000000, hap:6, mor:18, mbti:['F','J'], set:s=>{clearSins(s,['GAMBLING','MILLSTONE']);} },
-    { key:'B', text:'Geofence it. Clean in Belgium. Unchanged everywhere else.',
+    { key:'B', text:'Only comply where you have to. Clean in Belgium, unchanged everywhere else.',
       money:-500000, hap:-2, mor:-12, mbti:['T','P'], set:s=>{} },
-    { key:'C', text:'Fund a lobbying group and an astroturfed "player freedom" campaign.',
+    { key:'C', text:'Fund a lobbying group and a fake grassroots campaign about player freedom.',
       money:-2000000, hap:-6, mor:-22, mbti:['N','T'], set:s=>{addSin(s,'DECEIT');} }
   ]},
 
 { id:'D20', num:20, act:'IV · Reckoning', title:'The Legacy Project',
-  kicker:'The last thing you greenlight yourself.',
-  body:`<p>Three pitches. One of them is the reason you left your last job. One of them is reliable. One of them was sent to you by a man in a gilet who used the phrase "player-owned economy" nine times in eleven minutes.</p>`,
+  kicker:'The last thing you get to greenlight.',
+  body:`<p>Three pitches. One is the reason you left your old job. One is safe. One came from a man in a gilet who said the phrase "player-owned economy" nine times in eleven minutes.</p>`,
   opts:[
-    { key:'A', text:'Fund the small honest game the team actually wants. Three years. No monetisation.',
+    { key:'A', text:'Fund the small honest game your team actually wants. Three years. Nothing to buy.',
       money:-6000000, hap:20, mor:14, mbti:['N','J'], set:s=>{},
-      lock:s=>s.flagshipSold?'The IP was sold during the insolvency':null },
-    { key:'B', text:'The annual instalment. Reskinned. Reliable.',
+      lock:s=>s.flagshipSold?'The rights were sold when you ran out of money':null },
+    { key:'B', text:'The yearly sequel. Same game, new skin. Reliable.',
       money:9000000, hap:-10, mor:-6, mbti:['S','J'], set:s=>{s.delisted=true;} },
-    { key:'C', text:'Player-owned economy. Tokens. Real ownership, they keep saying.',
+    { key:'C', text:'Crypto tokens. Players really own their items, he keeps saying.',
       money:15000000, hap:-16, mor:-22, mbti:['N','P'],
       set:s=>{addSin(s,'FRAUD'); s.debts.push({amount:25000000,due:2,label:'Token economy collapse'});} }
   ]},
 
 { id:'D21', num:21, act:'IV · Reckoning', title:'The Exit',
   kicker:'Last one.',
-  body:`<p>You are fifty-one. The building has a hundred and ten people in it. Everything you did is still on a server somewhere and will be after you leave.</p>`,
+  body:`<p>You are fifty-one. There are a hundred and ten people in the building. Everything you did is still saved on a server somewhere and will be there after you leave.</p>`,
   opts:[
-    { key:'A', text:'Private equity. Maximum number. Walk.',
+    { key:'A', text:'Sell to private equity. Biggest number. Walk away.',
       money:25000000, hap:-20, mor:-18, mbti:['T','P'], set:s=>{} },
-    { key:'B', text:'Employee ownership trust. Modest payout. They keep the building.',
+    { key:'B', text:'Sell it to the staff. Smaller payout. They keep the building.',
       money:4000000, hap:22, mor:22, mbti:['F','J'], set:s=>{} },
-    { key:'C', text:'Publish everything. Make direct restitution to the people you named. Dissolve.',
+    { key:'C', text:'Publish everything. Pay back the people you hurt, by name. Close the studio.',
       money:s=>-Math.round(Math.max(0,s.money)*0.5),
       hap:12, mor:s=>30 + 5*s.sins.length, mbti:['E','J'],
       set:s=>{ s.sins=[]; } }
@@ -658,29 +658,29 @@ function NODEBYID(id){ return NODES.find(n=>n.id===id); }
    INSOLVENCY
    ============================================================ */
 const DIGNIFIED = [
-  { key:'1', text:'The Open Books. Show the team the real numbers. Ask for deferred pay, in writing, with interest and a hard date.',
+  { key:'1', text:'Open the books. Show the team the real numbers and ask them to wait for their pay. In writing, with interest and a fixed date.',
     money:450000, hap:6, mor:12, mbti:['E','F'], req:s=>s.trust>=2 && s.team!=='solo',
     set:s=>{ s.debts.push({amount:500000,due:4,label:'Deferred staff pay repayment'}); s.deferredPay=true; } },
-  { key:'2', text:'Go back to the backers. Honest post: what went wrong, what runway is left, refunds available on request.',
+  { key:'2', text:'Go back to the backers. Post honestly: what went wrong, how much money is left, refunds for anyone who wants one.',
     money:380000, hap:2, mor:14, mbti:['E','J'], req:s=>s.backers && !s.sins.includes('FRAUD'), set:s=>{} },
-  { key:'3', text:"Founder's stake. Remortgage, sell the car, zero salary for a year. Nobody else pays for this.",
+  { key:'3', text:"Put in your own money. Remortgage, sell the car, no salary for a year. Nobody else pays for this.",
     money:550000, hap:-12, mor:14, mbti:['I','J'], req:s=>true, set:s=>{} },
-  { key:'4', text:'Sell the flagship IP. A rival buys it and will make three of them. All debts cleared, everyone keeps their job.',
+  { key:'4', text:'Sell the rights to your main game. A rival buys it and makes three more. Debts cleared, everyone keeps their job.',
     money:1400000, hap:-14, mor:4, mbti:['S','P'], req:s=>s.pub!=='predatory',
     set:s=>{ s.flagshipSold=true; s.audience=s.audience||'mass'; s.debts=[]; } }
 ];
 const DESPERATE = [
-  { key:'5', text:'Miss payroll. Vendors and your own draw clear; staff wages slip a cycle. Twice.',
+  { key:'5', text:'Skip payroll. Suppliers and your own pay go through. Staff wages are late. Twice.',
     money:500000, hap:-20, mor:-22, mbti:['T','P'], set:s=>{ s.trust-=6; addSin(s,'WAGE_THEFT'); } },
-  { key:'6', text:'The bridge. Thirty-eight percent APR from a lender who specialises in exactly this moment.',
+  { key:'6', text:'Take a thirty-eight percent interest loan from a lender who specialises in exactly this moment.',
     money:900000, hap:-6, mor:-4, mbti:['T','P'],
     set:s=>{ s.debts.push({amount:1600000,due:6,label:'Bridge loan repayment, 38% APR'}); } },
-  { key:'7', text:'Sell the player database. Names, ages, spend history, session times. The buyer does not say what for.',
+  { key:'7', text:'Sell your player database. Names, ages, spending, login times. The buyer does not say why.',
     money:750000, hap:-8, mor:-18, mbti:['T','P'], set:s=>{ addSin(s,'DECEIT'); s.soldData=true; } },
-  { key:'8', text:'The Phoenix. Liquidate. Default on severance and creditors. Reopen Tuesday as a new company with the same desks.',
+  { key:'8', text:'Shut the company down. Skip the severance, skip the people you owe. Reopen Tuesday under a new name, same desks.',
     money:s=>1200000 + (s.insolvencies>=1?300000:0), hap:-16, mor:-25, mbti:['N','P'],
     set:s=>{ s.debts=[]; s.trust-=8; addSin(s,'WAGE_THEFT'); addSin(s,'DECEIT'); } },
-  { key:'9', text:'The rescue deal. A publisher saves you today for total IP ownership, two-year exclusivity and approval over your credits.',
+  { key:'9', text:'Emergency publisher deal. They save you today and take your game, two years of exclusivity, and approval over your credits.',
     money:1000000, hap:-10, mor:-6, mbti:['S','J'], set:s=>{ s.pub='predatory'; } }
 ];
 
@@ -754,7 +754,7 @@ function eyebrow(left,right){
 
 function costLine(o){
   const m=val(o.money,S), h=val(o.hap,S), mo=val(o.mor,S);
-  let out = `<span class="c-money ${m>=0?'pos':'neg'}">${m>=0?'+':''}${money(m).replace('-','')}</span>`;
+  let out = `<span class="c-money ${m>=0?'pos':'neg'}">${m>=0?'+':'\u2212'}${money(m).replace('-','')}</span>`;
   out += `<span class="c-hap ${h>=0?'pos':'neg'}">HAPPINESS ${sgn(h)}</span>`;
   out += S.ngPlus
     ? `<span class="c-mor">MORALITY ${sgn(mo)}</span>`
@@ -830,8 +830,8 @@ function present(n){
   if(n.interstitial && n.build){
     const d = n.build(S);
     let calc = `<div class="calc">`;
-    d.rows.forEach(r=>{ calc += `<div><span>${r[0]}</span><span>${r[1]>=0?'+':''}${money(r[1]).replace('-','')}</span></div>`; });
-    calc += `<div class="tot"><span>Net</span><span>${d.total>=0?'+':''}${money(d.total).replace('-','')}</span></div></div>`;
+    d.rows.forEach(r=>{ calc += `<div><span>${r[0]}</span><span>${r[1]>=0?'+':'\u2212'}${money(r[1]).replace('-','')}</span></div>`; });
+    calc += `<div class="tot"><span>Net</span><span>${d.total>=0?'+':'\u2212'}${money(d.total).replace('-','')}</span></div></div>`;
     renderInfo(val(n.title,S), val(n.kicker,S), d.body + calc, 'File it', ()=>{
       S.money += d.total; setHud(); advance();
     });
@@ -873,18 +873,18 @@ function insolvency(){
   const second = S.insolvencies>=2;
   let html = `<div class="stamp-box">Insolvent &middot; ${money(S.money)}</div>
     <h1 class="title">The Room With The Spreadsheet</h1>
-    <div class="kicker">All figures shown. Decide with the numbers in front of you.</div>
+    <div class="kicker">Every number shown. Decide with them in front of you.</div>
     <div class="body">
-      <p>Your accountant has laid it out cold, because there is no version of this conversation that benefits from warmth. Every option below shows exactly what it pays and exactly what it costs the people in the building.</p>
-      ${second?`<p><strong>This is the second time.</strong> The options that required goodwill are gone. You spent that.</p>`:''}
-      <p>What you cannot see is the third column. You have not been able to see it all game and you cannot see it now, which is the only genuinely difficult part of this screen.</p>
+      <p>Your accountant has laid it out cold, because being gentle about it would not help. Every option below shows exactly what it pays you and exactly what it costs the people in the building.</p>
+      ${second?`<p><strong>This is the second time.</strong> The options that needed goodwill are gone. You used that up.</p>`:''}
+      <p>What you cannot see is the third column. You have not been able to see it all game and you cannot see it now, which is the only actually hard part of this screen.</p>
     </div><div class="rule"></div><div class="opts">`;
   opts.forEach((o,i)=>{
     const m=val(o.money,S), h=val(o.hap,S);
     html += `<button class="opt" data-i="${i}">
       <span class="opt-head"><span class="opt-key">${o.key}</span><span class="opt-text">${o.text}</span></span>
       <div class="opt-costs">
-        <span class="c-money pos">+${money(m).replace('-','')}</span>
+        <span class="c-money ${m>=0?'pos':'neg'}">${m>=0?'+':'\u2212'}${money(m).replace('-','')}</span>
         <span class="c-hap ${h>=0?'pos':'neg'}">HAPPINESS ${sgn(h)}</span>
         ${S.ngPlus?`<span class="c-mor">MORALITY ${sgn(val(o.mor,S))}</span>`:`<span class="c-hidden">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span>`}
       </div></button>`;
@@ -907,17 +907,17 @@ function insolvency(){
    ENDING
    ============================================================ */
 const SIN_TEXT = {
-  WAGE_THEFT:'The people whose wages you held, moved or never paid. They know exactly what it was.',
-  FRAUD:'Everyone who paid for the thing in the trailer and received the thing in the build.',
-  CRUNCH:'The eighteen months nobody got back, taken from people who were told it was temporary.',
-  DECEIT:'The audience who thought they were reading an opinion.',
-  OPPRESSION:'The people you used a lawyer on because it was cheaper than being fair to them.',
-  SCANDAL:'The three juniors, who signed something. And whoever he works with now.',
+  WAGE_THEFT:'The people whose pay you held back, moved, or never sent. They know exactly what it was.',
+  FRAUD:'Everyone who paid for the game in the trailer and got the game in the box.',
+  CRUNCH:'Eighteen months nobody gets back, taken from people who were told it was temporary.',
+  DECEIT:'The audience who thought they were reading somebody\'s real opinion.',
+  OPPRESSION:'The people you sent a lawyer at because it was cheaper than being fair to them.',
+  SCANDAL:'The three juniors who signed something. And whoever he works with now.',
   GAMBLING:'The man in Osaka, and the eleven thousand accounts that look like his.',
-  THEFT:'The artists whose work trained the model, and the people who fixed your bugs for free.',
-  LIE:'The hundred and ten people you looked at and reassured.',
+  THEFT:'The artists whose work trained the model, and the fans who fixed your bugs for free.',
+  LIE:'The hundred and ten people you looked in the eye and reassured.',
   CALUMNY:'The person who told the truth, and what you published about them for it.',
-  MILLSTONE:'Children. Specifically and by design. The tradition has a line about this and it involves the sea.'
+  MILLSTONE:'Children. On purpose, by design. There is an old line about people who do this and it involves the sea.'
 };
 
 const MBTI_TEXT = {
@@ -955,25 +955,25 @@ function guessMBTI(){
 function verdict(m,h,mo){
   const M = S.money>=6000000, H = S.happiness>=60, O = mo>=60;
   if(S.chapter7) return { name:'Chapter 7',
-    text:'The court appointed someone to sell the desks. Your score is calculated on the decisions you actually made, which is fewer than most people get. The game is obliged to point out that you were never tested on the ones that break people. Whether that counts as mercy is between you and the ledger.' };
+    text:'The court appointed someone to sell the desks. You get scored on the decisions you actually made, which is fewer than most people get. Worth pointing out: you were never tested on the ones that break people. Whether that counts as mercy is between you and the ledger.' };
   if(S.ngPlus && M && O) return { name:'The Actuary',
-    text:'You could see all three columns and you optimised across them. You did not become good; you learned the exchange rate. The Impossible One stays closed to you — it only opens for people who did it blind.' };
+    text:'You could see all three numbers and you worked them against each other. You did not become good. You learned the exchange rate. The Impossible One stays shut to you. It only opens for people who played it blind.' };
   if(M&&H&&O) return { name:'The Impossible One',
-    text:'Money, morale and conscience, all three, in an industry structured to make you pick two. Either your first act was unusually careful or your fourth was unusually expensive. Roughly one run in thirteen lands here.' };
+    text:'Money, morale and conscience, all three, in an industry built to make you pick two. Either you were very careful early or you paid a lot late. About one run in thirteen ends here.' };
   if(M&&H&&!O) return { name:'The Comfortable Monster',
-    text:'Everyone inside the building is happy. That is what makes it worse — you built a place where the harm is completely invisible from the inside, including to you.' };
+    text:'Everyone inside the building is happy. That is what makes it worse. You built a place where the damage is invisible from the inside, including to you.' };
   if(M&&!H&&O) return { name:'The Martyr CEO',
-    text:'You did right by the world and ground yourself and your staff into powder doing it. Scrupulosity is not the same thing as virtue. Nobody thanked you and you have not slept properly since the second act.' };
+    text:'You did right by everyone else and ground yourself and your staff into dust doing it. Being hard on yourself is not the same as being good. Nobody thanked you and you have not slept properly since act two.' };
   if(M&&!H&&!O) return { name:'The Standard Outcome',
-    text:'You are now indistinguishable from the studio you left to get away from. There is a version of you on the first screen of this game and he would not shake your hand.' };
+    text:'You are now the same as the studio you left to get away from. There is a version of you on the first screen of this game and he would not shake your hand.' };
   if(!M&&H&&O) return { name:'The Good Failure',
-    text:'Broke, beloved, morally intact. Everyone will say you were the real ones. Nobody will fund your next game, and the people who said it loudest will not be in the room when you ask.' };
+    text:'Broke, loved, and clean. Everyone will say you were the real ones. Nobody will fund your next game, and the people who said it loudest will not be in the room when you ask.' };
   if(!M&&H&&!O) return { name:'The Party On The Titanic',
-    text:'Insolvent, complicit, and somehow still in good spirits. That is an impressive amount of dissociation and it must have taken real work.' };
+    text:'Out of money, in the wrong, and somehow still in a good mood. That takes real work.' };
   if(!M&&!H&&O) return { name:'The Penitent',
-    text:'You gave it back. The money and the people are both gone. This is the highest conscience score the game can produce and it looks exactly like losing, because from the outside there is no difference.' };
+    text:'You gave it back. The money and the people are both gone. This is the highest conscience score the game can give you, and it looks exactly like losing, because from the outside there is no difference.' };
   return { name:'Nothing To Show',
-    text:'No money, no team, no case for the defence. The rarest failure state in the game, because it requires being cruel and also being bad at it.' };
+    text:'No money, no team, nothing to say in your defence. The rarest ending in the game, because you have to be cruel and also bad at it.' };
 }
 
 function ending(){
@@ -1002,12 +1002,12 @@ function ending(){
 
   const unsettled = S.sins.length
     ? `<ul class="unsettled">${S.sins.map(x=>`<li>${SIN_TEXT[x]||x}</li>`).join('')}</ul>
-       <p>Nobody has apologised to any of them and nobody is going to now.</p>`
-    : `<p>Nothing outstanding. Either you did not do the damage, or you paid for it in full while the paying still counted.</p>`;
+       <p>Nobody has apologised to any of them, and nobody is going to now.</p>`
+    : `<p>Nothing outstanding. Either you did not do the damage, or you paid for it while paying still counted.</p>`;
 
   const never = S.neverFaced.length
-    ? `<ul class="unsettled">${S.neverFaced.map(n=>`<li><strong>${n.node}</strong> — ${n.why}. Available range on conscience: ${n.range}.</li>`).join('')}</ul>`
-    : `<p>You faced every decision the game had. That is not common.</p>`;
+    ? `<ul class="unsettled">${S.neverFaced.map(n=>`<li><strong>${n.node}</strong> — ${n.why}. Conscience was worth between ${n.range}.</li>`).join('')}</ul>`
+    : `<p>You faced every decision the game had. That is rare.</p>`;
 
   doc.innerHTML = `
     <div class="stamp-box">Final — ${S.ngPlus?'New Game+':'First run'}</div>
@@ -1065,7 +1065,7 @@ function start(ngPlus){
   let prevLine = '';
   if(ngPlus && prev){
     try{ const p=JSON.parse(prev);
-      prevLine = `<p><strong>Last run:</strong> ${p.verdict}. ${money(p.money)}, happiness ${p.happiness}, morality ${p.morality}. The game will mark where you do the same thing twice.</p>`;
+      prevLine = `<p><strong>Last run:</strong> ${p.verdict}. ${money(p.money)}, happiness ${p.happiness}, morality ${p.morality}. The game marks where you do the same thing twice.</p>`;
     }catch(e){}
   }
 
@@ -1073,12 +1073,12 @@ function start(ngPlus){
   renderInfo(
     ngPlus?'New Game+':'Post-Mortem',
     ngPlus?'All three columns visible':'Bad Weather Games · month one',
-    `<p>You are the founder of <strong>Bad Weather Games</strong>. Three people, a converted dentist's office above a laundromat, and one hundred thousand dollars.</p>
-     <p>Two years ago you left a large studio after shipping something you are not proud of. This was supposed to be the correction.</p>
+    `<p>You run <strong>Bad Weather Games</strong>. Three people, a converted dentist's office above a laundromat, and a hundred thousand dollars.</p>
+     <p>Two years ago you quit a big studio after shipping something you were not proud of. This was meant to fix that.</p>
      ${ngPlus
-       ? prevLine + `<p>This time you can see the third column before you click. It does not get easier. It gets harder to feel good about.</p>`
-       : `<p>Three things are being recorded. You can see <strong>Money</strong> and <strong>Happiness</strong>. The third is being kept and will not be shown to you until the end. You will be able to guess at it. You will be wrong more often than you expect.</p>`}
-     <p>Twenty-one decisions. Earlier ones close later ones, permanently and without warning.</p>`,
+       ? prevLine + `<p>This time you can see the third number before you click. It does not get easier. It gets harder to feel good about.</p>`
+       : `<p>Three things are being tracked. You can see <strong>Money</strong> and <strong>Happiness</strong>. The third one is being recorded and will not be shown to you until the end. You can guess at it. You will be wrong more often than you think.</p>`}
+     <p>Twenty-one decisions. Earlier ones shut off later ones, permanently, without telling you.</p>`,
     ngPlus?'Begin again':'Begin', ()=>advance(),
     ngPlus?'Second pass':null
   );
